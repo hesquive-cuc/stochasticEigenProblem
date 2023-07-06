@@ -1,8 +1,6 @@
-function eta=getTensor_eta()
+function eta=getTensor_eta(R)
 % Hugo Esquivel, 2023.
 % -
 
-R=3; % do not change... this is the number of ODEs in the illustrative example.
-
-eta=eye(R);
+eta=eye(R); % assuming the Euclidean metric tensor
 end

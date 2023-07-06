@@ -13,7 +13,7 @@ caseStudy='uniform'; % Options: uniform, unsymmetricBeta, symmetricBeta, gamma, 
 numRandomVariables=2;
 maxPolynomialOrder=2;
 
-runMethod='Newton'; % Options: Newton or Halley
+runMethod='Halley'; % Options: Newton or Halley
 
 maxNumIterations=100;
 tol=1e-12;

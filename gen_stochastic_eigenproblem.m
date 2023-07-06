@@ -21,6 +21,8 @@ maxPolynomialOrder=2;
 d=numRandomVariables;
 p=maxPolynomialOrder;
 
+R=3; % do not change... this is the number of ODEs in the illustrative example.
+
 [distr,rvar]=getDistribution_info(caseStudy);
 
 tic
@@ -30,7 +32,7 @@ Psi=getBasis_Psi(d,p,distr);
 Upsilon=getTensor_Upsilon(d,pdf,Psi,distr);
 I=getTensor_I(d,pdf,Psi,Upsilon,distr);
 K=getTensor_K(d,pdf,Psi,Upsilon,caseStudy,distr,rvar);
-eta=getTensor_eta();
+eta=getTensor_eta(R);
 
 toc
 
