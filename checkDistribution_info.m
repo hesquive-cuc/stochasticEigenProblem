@@ -55,7 +55,7 @@ for i=1:d
             end
 
             if any(distr{i}.support~=[-Inf,Inf])
-                error('The code requires that normal''s support is [-Inf,Inf].')
+                error('By definition, normal''s support is [-Inf,Inf].')
             end
     end
 end

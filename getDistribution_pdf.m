@@ -1,4 +1,4 @@
-function pdf=get_pdf(d,distr)
+function pdf=getDistribution_pdf(d,distr)
 % Hugo Esquivel, 2023.
 % -
 % d = dimensionality of random domain = number of random variables.

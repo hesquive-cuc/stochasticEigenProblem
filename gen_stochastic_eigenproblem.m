@@ -21,13 +21,13 @@ maxPolynomialOrder=2;
 d=numRandomVariables;
 p=maxPolynomialOrder;
 
-[distr,rvar]=getDistribution(caseStudy);
+[distr,rvar]=getDistribution_info(caseStudy);
 
 tic
 
-pdf=get_pdf(d,distr);
-Psi=get_Psi(d,p,distr);
-Upsilon=get_Upsilon(d,pdf,Psi,distr);
+pdf=getDistribution_pdf(d,distr);
+Psi=getBasis_Psi(d,p,distr);
+Upsilon=getTensor_Upsilon(d,pdf,Psi,distr);
 I=getTensor_I(d,pdf,Psi,Upsilon,distr);
 K=getTensor_K(d,pdf,Psi,Upsilon,caseStudy,distr,rvar);
 eta=getTensor_eta();

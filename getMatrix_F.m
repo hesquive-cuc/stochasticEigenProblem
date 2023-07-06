@@ -1,13 +1,16 @@
-function F=getMatrix_F(I,K,eta,lambda,phi)
+function F=getMatrix_F(I,K,eta,x)
 % Hugo Esquivel, 2023.
 % -
 
 R=size(K,1);
 P=size(K,3)-1;
+Q=(R+1)*(P+1);
 
-delta=eye(1+P);
+delta=eye(R);
 
-F=zeros((R+1)*(P+1));
+[lambda,phi]=get_lambda_phi(x,R,P);
+
+F=zeros(Q);
 
 % F-block 11: F^u^i_beta
 for u=1:R
@@ -38,7 +41,7 @@ end
 % F-block 21: F^i_beta
 for i=0:P
     for beta=0:P
-        F(i+R*(1+P)+1,beta+1)=0;
+        F(i+R*(P+1)+1,beta+1)=0;
     end
 end
 
@@ -47,7 +50,7 @@ for alpha=1:R
     for i=0:P
         for beta=0:P
             for u=1:R
-                F(i+R*(1+P)+1,alpha+R*beta+P+1)=F(i+R*(1+P)+1,alpha+R*beta+P+1)-2*eta(alpha,u)*F(u+R*i,beta+1);
+                F(i+R*(P+1)+1,alpha+R*beta+P+1)=F(i+R*(P+1)+1,alpha+R*beta+P+1)-2*eta(alpha,u)*F(u+R*i,beta+1);
             end
         end
     end

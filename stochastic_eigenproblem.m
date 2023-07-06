@@ -7,15 +7,13 @@ clearvars; close all; clc;
 % ----------------------------------------------------------------------------------------------------------------------
 % INPUT:
 % ----------------------------------------------------------------------------------------------------------------------
-% WARNING: UNSYMMETRIC BETA AND GAMMA DISTRIBUTIONS DO NOT CONVERGE... NEED TO FIX THIS!!!
-
 eigen=1; % Options: 1, 2 or 3
 caseStudy='uniform'; % Options: uniform, unsymmetricBeta, symmetricBeta, gamma, normal or uniformNormal
 
 numRandomVariables=2;
 maxPolynomialOrder=2;
 
-runMethod='Halley'; % Options: Newton or Halley
+runMethod='Newton'; % Options: Newton or Halley
 
 maxNumIterations=100;
 tol=1e-12;
@@ -49,19 +47,8 @@ data=load(sprintf('trial_eigen%d_%s_P%d.mat',eigen,caseStudy,P));
 lambda=data.lambda;
 phi=data.phi;
 
-x=zeros((R+1)*(P+1),1);
-
-for i=0:P
-    x(i+1)=lambda(i+1);
-end
-
-for u=1:R
-    for i=0:P
-        x(u+R*i+P+1)=phi(u,i+1);
-    end
-end
-
-f=getVector_f(I,K,eta,lambda,phi);
+x=getVector_x(lambda,phi);
+f=getVector_f(I,K,eta,x);
 
 df=norm(f);
 
@@ -69,25 +56,17 @@ fprintf('Iteration %d: %e...\n',0,df)
 
 greenFlag=false;
 
+tic
+
 switch runMethod
     case 'Newton' % Old approach: Ghanem and Gosh's approach (2007 paper)...
         % "Efficient characterization of the random eigenvalue problem in a polynomial chaos decomposition."
         for ii=1:maxNumIterations
-            F=getMatrix_F(I,K,eta,lambda,phi);
+            F=getMatrix_F(I,K,eta,x);
 
             x=x-F\f;
 
-            for i=0:P
-                lambda(i+1)=x(i+1);
-            end
-
-            for u=1:R
-                for i=0:P
-                    phi(u,i+1)=x(u+R*i+P+1);
-                end
-            end
-
-            f=getVector_f(I,K,eta,lambda,phi);
+            f=getVector_f(I,K,eta,x);
 
             df=norm(f);
 
@@ -102,23 +81,13 @@ switch runMethod
 
     case 'Halley' % New approach...
         for ii=1:maxNumIterations
-            F=getMatrix_F(I,K,eta,lambda,phi);
+            F=getMatrix_F(I,K,eta,x);
             X=getMatrix_X(F);
-            H=getMatrix_H(I,K,eta,lambda,phi,X,f);
+            H=getMatrix_H(I,K,eta,x,X,f);
 
             x=x-H\f;
 
-            for i=0:P
-                lambda(i+1)=x(i+1);
-            end
-
-            for u=1:R
-                for i=0:P
-                    phi(u,i+1)=x(u+R*i+P+1);
-                end
-            end
-
-            f=getVector_f(I,K,eta,lambda,phi);
+            f=getVector_f(I,K,eta,x);
 
             df=norm(f);
 
@@ -134,10 +103,16 @@ end
 
 fprintf('\n')
 
+toc
+
+fprintf('\n')
+
 if greenFlag==false
     fprintf('>>>>> Simulation DID NOT converge <<<<<\n')
     fprintf('\n')
 end
+
+[lambda,phi]=get_lambda_phi(x,R,P);
 % ----------------------------------------------------------------------------------------------------------------------
 
 

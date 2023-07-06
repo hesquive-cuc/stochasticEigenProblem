@@ -1,4 +1,4 @@
-function [distr,rvar]=getDistribution(caseStudy)
+function [distr,rvar]=getDistribution_info(caseStudy)
 % Hugo Esquivel, 2023.
 % -
 % d = dimensionality of random domain = number of random variables.
@@ -90,5 +90,5 @@ switch caseStudy
         rvar{2}.sigma=5;
 end
 
-checkDistribution(distr)
+checkDistribution_info(distr)
 end

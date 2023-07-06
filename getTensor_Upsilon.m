@@ -1,4 +1,4 @@
-function Upsilon=get_Upsilon(d,pdf,Psi,distr)
+function Upsilon=getTensor_Upsilon(d,pdf,Psi,distr)
 % Hugo Esquivel, 2023.
 % -
 % d = dimensionality of random domain = number of random variables.

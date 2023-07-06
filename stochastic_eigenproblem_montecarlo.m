@@ -22,7 +22,7 @@ maxPolynomialOrder=2;
 d=2; % do not change... this is the number of random variables.
 R=3; % do not change... this is the number of ODEs in the illustrative example.
 
-[distr,rvar]=getDistribution(caseStudy);
+[distr,rvar]=getDistribution_info(caseStudy);
 
 switch caseStudy
     case 'uniform'
@@ -100,6 +100,8 @@ D=[0 0 0; 0 1 -1; 0 -1 1];
 lambdaMC=zeros(R,numSimulations);
 phiMC=zeros(R,R,numSimulations);
 
+tic
+
 for i=1:numSimulations
     KMC=aMC(i)*C+bMC(i)*D;
 
@@ -108,6 +110,8 @@ for i=1:numSimulations
     lambdaMC(:,i)=diag(LMC);
     phiMC(:,:,i)=VMC;
 end
+
+toc
 % ----------------------------------------------------------------------------------------------------------------------
 
 
@@ -167,6 +171,7 @@ for j=1:R
     phivariance1(j)=sum((phiMCstar(:,j,eigen)-phimean1(j)).^2)/(numSimulations-1);
 end
 
+fprintf('\n')
 fprintf('------ Probability moments computed statistically (N = %d) ------\n',numSimulations)
 fprintf('\n')
 
@@ -197,6 +202,7 @@ for j=1:R
     phivariance2(j)=sum(diag(Upsilon(2:end,2:end)).*transpose(phi(j,2:end)).^2);
 end
 
+fprintf('\n')
 fprintf('----- Probability moments computed spectrally (N = %d and P = %d) -----\n',numSimulations,P)
 fprintf('\n')
 

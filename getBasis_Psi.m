@@ -1,4 +1,4 @@
-function Psi=get_Psi(d,p,distr)
+function Psi=getBasis_Psi(d,p,distr)
 % Hugo Esquivel, 2023.
 % -
 % d = dimensionality of random domain = number of random variables.
