@@ -1,4 +1,4 @@
-function F=getMatrix_F(I,K,eta,x)
+function F=getMatrix_F(K,I,eta,x)
 % Hugo Esquivel, 2023.
 % -
 
@@ -39,11 +39,11 @@ for u=1:R
 end
 
 % F-block 21: F^i_beta
-for i=0:P
-    for beta=0:P
-        F(i+R*(P+1)+1,beta+1)=0;
-    end
-end
+% for i=0:P
+%     for beta=0:P
+%         F(i+R*(P+1)+1,beta+1)=0;
+%     end
+% end
 
 % F-block 22: F_alpha^i_beta
 for alpha=1:R

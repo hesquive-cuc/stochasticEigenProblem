@@ -48,7 +48,7 @@ lambda=data.lambda;
 phi=data.phi;
 
 x=getVector_x(lambda,phi);
-f=getVector_f(I,K,eta,x);
+f=getVector_f(K,I,eta,x);
 
 df=norm(f);
 
@@ -59,14 +59,14 @@ greenFlag=false;
 tic
 
 switch runMethod
-    case 'Newton' % Old approach: Ghanem and Gosh's approach (2007 paper)...
+    case 'Newton' % Old approach: Ghanem and Ghosh's approach (2007 paper)...
         % "Efficient characterization of the random eigenvalue problem in a polynomial chaos decomposition."
         for ii=1:maxNumIterations
-            F=getMatrix_F(I,K,eta,x);
+            F=getMatrix_F(K,I,eta,x);
 
             x=x-F\f;
 
-            f=getVector_f(I,K,eta,x);
+            f=getVector_f(K,I,eta,x);
 
             df=norm(f);
 
@@ -81,13 +81,13 @@ switch runMethod
 
     case 'Halley' % New approach...
         for ii=1:maxNumIterations
-            F=getMatrix_F(I,K,eta,x);
-            X=getMatrix_X(F);
-            H=getMatrix_H(I,K,eta,x,X,f);
+            F=getMatrix_F(K,I,eta,x);
+            y=x-1/2*(F\f);
+            F=getMatrix_F(K,I,eta,y);
+            
+            x=x-F\f;
 
-            x=x-H\f;
-
-            f=getVector_f(I,K,eta,x);
+            f=getVector_f(K,I,eta,x);
 
             df=norm(f);
 

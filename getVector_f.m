@@ -1,4 +1,4 @@
-function f=getVector_f(I,K,eta,x)
+function f=getVector_f(K,I,eta,x)
 % Hugo Esquivel, 2023.
 % -
 
@@ -17,9 +17,7 @@ for u=1:R
             for v=1:R
                 f(u+R*i)=f(u+R*i)+K(u,v,i+1,j+1)*phi(v,j+1);
             end
-        end
-
-        for j=0:P
+            
             for k=0:P
                 f(u+R*i)=f(u+R*i)-I(i+1,j+1,k+1)*lambda(k+1)*phi(u,j+1);
             end
